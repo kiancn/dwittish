@@ -51,12 +51,10 @@
         <tr>
             <td>
                 <textarea id="userCode" rows="5" cols="84" style="resize: both;" onchange="interpretUserCode()">
-clr(); 
-for (i = 0; i < 9; i++){
-x.beginPath();
-x.arc(i*100-S(t*i)*60+250, S(t)*75+200+i*50-S(t*i), 50, 0, 2 * Math.PI);
-x.fill();
-}
+for(i=2e3,X=d=0,y=460+t*60;i--;y+=C(d+=S(i**8))*3){
+x.fillRect(X+=C(d)+2+T(t/2)/9,y/2,2/(1+t),t<100)
+x.fillRect(t*i*y%2e3,y-T(t/4)*i*t-200,.5,t<4)
+} 
                 </textarea>
             </td>
         </tr>
