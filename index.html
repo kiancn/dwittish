@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Styling Imports -->
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+
+        }
+    </style>
+
+    <!-- External Libraries -->
+    <script src="lib/matterjs/matter.js"></script>
+    <!-- imports are ordered by the principle of minimal dependency (it's the GameLoop library by me)-->
+    <script src="core/heart.js"></script>
+    <script src="core/renderer2D.js"></script>
+
+    <script src="dwittish.js"></script>
+    <title>Dwittish</title>
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+
+    <div style="position: absolute;left: 60px;bottom: 60px; background-color: rgb(0, 0, 0); opacity: 85%;">
+
+        <code>
+
+    <table class="table-sm m-2" id="codeTable" >
+        <tr>
+            <th class="ml-5">function update(t) { <span class="">// click ⚡ for help or 👁 to toggle code view</span></th>
+        </tr>
+        <tr>
+            <td>
+                <textarea id="userCode" rows="5" cols="84" style="resize: both;" onchange="interpretUserCode()">
+clr(); 
+for (i = 0; i < 9; i++){
+x.beginPath();
+x.arc(i*100-S(t*i)*60+250, S(t)*75+200+i*50-S(t*i), 50, 0, 2 * Math.PI);
+x.fill();
+}
+                </textarea>
+            </td>
+        </tr>
+        <tr>
+            <th>}
+            <span class="ml-3">// Example:</span>
+            <span class="btn text-success" id="example1" onclick="loadExample(0)">{Ex. 1}</span>
+            <span class="btn text-success" id="example2" onclick="loadExample(1)">{Ex. 2}</span>
+            <span class="btn text-success" id="example3" onclick="loadExample(2)">{Ex. 3}</span>
+            <span class="btn text-success" id="example4" onclick="loadExample(3)">{Ex. 4}</span>
+            </th>
+        </tr>
+    </table>
+    </code>
+
+    </div>
+
+    <h1 onclick="toggleElement('codeTable')" class="p-1" style="position: absolute;left: 0cm;bottom: 0cm;"> 👁 </h1>
+
+    <div onclick="toggleElement('hint')" class="p-1"
+        style="position: absolute;left: 0cm;bottom: 1.3cm; opacity: 90%;font-size: xx-large;">⚡</div>
+
+    <div id="errorFrown" style="position: absolute;right: 4cm;bottom: 60px; opacity: 70%;display: none;font-size: 5cm;">
+        😦</div>
+
+    <div id="badFieldCross"
+        style="position: absolute;right: 8cm;bottom: 60px; opacity: 70%;display: none;font-size: 5cm;">❌</div>
+
+
+
+    <div style="position: absolute;right: 30px;bottom: 10px; opacity: 90%;font-size: xx-large;" onclick="drawing()">⳾
+    </div>
+
+    <!-- HELP SECTION -->
+    <div id="hint"
+        style="position: absolute;right: 50px;top: 30px; opacity: 90%; display: none; background-color: rgb(0, 0, 0);">
+        <code>
+        <table style="width: 650px;" class="m-2">
+            <tr>
+                <th>Identifier</th>
+                <th>Function</th>
+                <th>What is?</th>
+            </tr>
+            <tr>
+                <td>S</td>
+                <td>Math.sin</td>
+                <td>Sinus-function</td>
+            </tr>
+            <tr>
+                <td>C</td>
+                <td>Math.cos</td>
+                <td>Cosinus-function</td>
+            </tr>
+            <tr>
+                <td>T</td>
+                <td>Math.tan</td>
+                <td>Tangens-function</td>
+            </tr>
+            <tr>
+                <td>clr</td>
+                <td></td>
+                <td>Draws white on canvas: 'clears canvas'</td>
+            </tr>
+            <tr>
+                <td>lE</td>
+                <td>Natural log of arg</td>
+                <td>Log af arg, base E (2,7172..)</td>
+            </tr>
+            <tr>
+                <td>l2</td>
+                <td>log2 of arg</td>
+                <td>Log af arg, base 2</td>
+            </tr>
+            <tr>
+                <td>l10</td>
+                <td>log10 of arg</td>
+                <td>Log af arg, base 10</td>
+            </tr>
+            <tr>
+                <th>Identifier</th>
+                <th>Field</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>c</td>
+                <td>canvas</td>
+                <td>Current canvas (window size)</td>
+            </tr>
+            <tr>
+                <td>x</td>
+                <td>context</td>
+                <td>Context for current canvas</td>
+            </tr>
+            <tr>
+                <td>mX</td>
+                <td></td>
+                <td>Mouse X Coordinate</td>
+            </tr>
+            <tr>
+                <td>mY</td>
+                <td></td>
+                <td>Mouse Y Coordinate</td>
+            </tr>
+
+            <tr>
+                <th></th>
+                <th colspan="2">General Hints</th>                
+            </tr>
+            <tr>
+                <td colspan="3">** Code is evaluated when the code textarea loses focus.</td>  
+            </tr>
+            <tr>
+                <td colspan="3">(Click anywhere outside textarea to evaluate new update function)</td>
+            </tr>
+            <tr>
+                <td colspan="2">** Code with bad syntax:</td>
+                <td>😦 will appear.</td>
+            </tr>
+            <tr>
+                <td colspan="2">** Code w. good syntax, bad refs:</td>
+                <td>❌ (On odd behavior, reload (F5))</td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <th colspan="2">** CANVAS DEFAULTS TO WINDOW SIZE</th>
+            </tr>
+            <tr>
+                <td><span></span></td>
+            </tr>
+            <tr>
+                <th colspan="2">Point of absolute inspiration:</th>
+                <th><a href="https://www.dwitter.net/" target="_blank">www.dwitter.net</a></th>
+            </tr>
+        </table>
+    </code>
+    </div>
+
+</body>
+
+</html>
