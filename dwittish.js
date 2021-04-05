@@ -30,19 +30,20 @@ userCodeExamples = [
     "for(i=2e3,X=d=0,y=460+t*60;i--;y+=C(d+=S(i**8))*3){\n" +
     "x.fillRect(X+=C(d)+2+T(t/2)/9,y/2,2/(1+t),t<100)\n" +
     "x.fillRect(t*i*y%2e3,y-T(t/4)*i*t-200,.5,t<4)\n" +
-    "}",  
-     "for (i = 12500; i--; x.fillRect(X, Y, 10, 1000)) {\n"+
-        "X = i % 1024 * 11, Y = (i - X)\n"+
-       " x.fillStyle = R(127 + 235 * (C(X / 20 + t + S(2 * t + Y / 7)) * C(-t / 2.1 + X / 9 + Y / 14)))\n"+
     "}",
-    "clr();\n" +
-    "x.font = '60px'\n" +
-        "x.fillStyle=R(S(t)*.15,C(t)*.65,0)\n"+   
-    "for (i = 0; i < 9; i++){\n" +
-    "x.beginPath();\n" +
-    "x.arc(i*100-S(t*i)*60+25, S(t)*75+200+i*50-S(t*i), 50, 0, 2 * Math.PI);\n" +
-    "x.fill();\n" +
-    "x.fillText('Trunky Brewster',650+C(t)*100,350+S(t)*100)\n" +
+    "for (i = 12500; i--; x.fillRect(X, Y, 10, 1000)) {\n" +
+    "X = i % 1024 * 11, Y = (i - X)\n" +
+    " x.fillStyle = R(127 + 235 * (C(X / 20 + t + S(2 * t + Y / 7)) * C(-t / 2.1 + X / 9 + Y / 14)))\n" +
+    "}",
+    "clr();\n"+
+    "x.font = '60pt Calibri'\n"+
+    "x.fillStyle=R(0,0,0)\n"+
+    "for (i = 0; i < 9; i++){\n"+
+    "x.beginPath();\n"+
+    "x.arc(i*100-S(t*i)*60+90, S(t)*75+200+i*50-S(t*i), 50, 0, 2 * Math.PI);\n"+
+    "x.fill();\n"+
+    "x.fillText('Trunky Brewster',650+C(t*i)*100,350+S(t*i)*100)\n"+
+    "x.fillStyle = R(S(t)*60,C(t/i)*56,C(t)*65)\n"+
     "}",
 
     "for(i=3e3;--i;x.fillRect(460+9*X*T(Y),-9*X*S(Y)+750,w=i/2**t,w))f=i*t,X=f*f%200,Y=X*f%4,x.fillStyle=R(q=i*(X**.3+Y<<2),q%T(X>>3)*i,q**.5,.1)",
@@ -90,10 +91,10 @@ function u(t) {
             }
         } else {
 
-    for(i=2e3,X=d=0,y=460+t*60;i--;y+=C(d+=S(i**8))*3){
-    x.fillRect(X+=C(d)+2+T(t/2)/9,y/2,2/(1+t),t<100)
-    x.fillRect(t*i*y%2e3,y-T(t/4)*i*t-200,.5,t<4)
-    }  
+            for (i = 2e3, X = d = 0, y = 460 + t * 60; i--; y += C(d += S(i ** 8)) * 3) {
+                x.fillRect(X += C(d) + 2 + T(t / 2) / 9, y / 2, 2 / (1 + t), t < 100)
+                x.fillRect(t * i * y % 2e3, y - T(t / 4) * i * t - 200, .5, t < 4)
+            }
         }
 
     }

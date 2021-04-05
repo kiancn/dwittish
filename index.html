@@ -17,13 +17,11 @@
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-
     <style>
         body {
             margin: 0;
             padding: 0;
             overflow: hidden;
-
         }
     </style>
 
@@ -34,7 +32,8 @@
     <script src="core/renderer2D.js"></script>
 
     <script src="dwittish.js"></script>
-    <title>Dwittish</title>
+
+    <title>Dwittish - HTML5/Canvas Playground</title>
 </head>
 
 <body>
@@ -46,7 +45,7 @@
 
     <table class="table-sm m-2" id="codeTable" >
         <tr>
-            <th class="ml-5">function update(t) { <span class="">// click ⚡ for help or 👁 to toggle code view</span></th>
+            <th>function update(t) {  <span class="text-secondary">// click ⚡ for help, 👁 to toggle code view, ✋ to pause drawing</span></th>
         </tr>
         <tr>
             <td>
@@ -72,10 +71,15 @@ x.fillRect(t*i*y%2e3,y-T(t/4)*i*t-200,.5,t<4)
 
     </div>
 
-    <h1 onclick="toggleElement('codeTable')" class="p-1" style="position: absolute;left: 0cm;bottom: 0cm;"> 👁 </h1>
+        
+    <div style="position: absolute;left: 0.3cm;bottom: 2.3cm; opacity: 90%;font-size: xx-large;" onclick="drawing()">✋
+    </div>
 
-    <div onclick="toggleElement('hint')" class="p-1"
-        style="position: absolute;left: 0cm;bottom: 1.3cm; opacity: 90%;font-size: xx-large;">⚡</div>
+    <div onclick="toggleElement('hint')"
+        style="position: absolute;left: 0.15cm;bottom: 1.2cm; opacity: 90%;font-size: xx-large;">⚡</div>
+
+    <h1 onclick="toggleElement('codeTable')" style="position: absolute;left: 0cm;bottom: 0cm;"> 👁 </h1>
+
 
     <div id="errorFrown" style="position: absolute;right: 4cm;bottom: 60px; opacity: 70%;display: none;font-size: 5cm;">
         😦</div>
@@ -85,8 +89,6 @@ x.fillRect(t*i*y%2e3,y-T(t/4)*i*t-200,.5,t<4)
 
 
 
-    <div style="position: absolute;right: 30px;bottom: 10px; opacity: 90%;font-size: xx-large;" onclick="drawing()">⳾
-    </div>
 
     <!-- HELP SECTION -->
     <div id="hint"
@@ -120,17 +122,17 @@ x.fillRect(t*i*y%2e3,y-T(t/4)*i*t-200,.5,t<4)
             </tr>
             <tr>
                 <td>lE</td>
-                <td>Natural log of arg</td>
+                <td>Math.log</td>
                 <td>Log af arg, base E (2,7172..)</td>
             </tr>
             <tr>
                 <td>l2</td>
-                <td>log2 of arg</td>
+                <td>Math.log2</td>
                 <td>Log af arg, base 2</td>
             </tr>
             <tr>
                 <td>l10</td>
-                <td>log10 of arg</td>
+                <td>Math.log10</td>
                 <td>Log af arg, base 10</td>
             </tr>
             <tr>
@@ -158,6 +160,11 @@ x.fillRect(t*i*y%2e3,y-T(t/4)*i*t-200,.5,t<4)
                 <td></td>
                 <td>Mouse Y Coordinate</td>
             </tr>
+            <tr>
+                <td>pi2</td>
+                <td>pi * 2</td>
+                <td>6.2831..</td>
+            </tr>
 
             <tr>
                 <th></th>
@@ -170,16 +177,18 @@ x.fillRect(t*i*y%2e3,y-T(t/4)*i*t-200,.5,t<4)
                 <td colspan="3">(Click anywhere outside textarea to evaluate new update function)</td>
             </tr>
             <tr>
+                <td colspan="3">** The update function is run at the browser native framerate (Prob ~60 fps).</td>
+            </tr>
+            <tr>
                 <td colspan="2">** Code with bad syntax:</td>
                 <td>😦 will appear.</td>
             </tr>
             <tr>
                 <td colspan="2">** Code w. good syntax, bad refs:</td>
                 <td>❌ (On odd behavior, reload (F5))</td>
-            </tr>
-            <tr></tr>
+            </tr>            
             <tr>
-                <th colspan="2">** CANVAS DEFAULTS TO WINDOW SIZE</th>
+                <th colspan="2">** CANVAS SIZE DEFAULTS TO WINDOW SIZE</th>
             </tr>
             <tr>
                 <td><span></span></td>
@@ -187,6 +196,14 @@ x.fillRect(t*i*y%2e3,y-T(t/4)*i*t-200,.5,t<4)
             <tr>
                 <th colspan="2">Point of absolute inspiration:</th>
                 <th><a href="https://www.dwitter.net/" target="_blank">www.dwitter.net</a></th>
+            </tr>
+            <tr>
+                <th colspan="2">Does this seem like magic?</th>
+                <th><a href="https://www.w3schools.com/html/html5_canvas.asp" target="_blank">HTML5 Canvas Resource</a></th>
+            </tr>
+            <tr>
+                <th colspan="2">Made by </th>
+                <th><a href="https://github.com/kiancn" target="_blank">Kian C. Nielsen</a></th>
             </tr>
         </table>
     </code>
