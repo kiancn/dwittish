@@ -1,14 +1,6 @@
 // the underscore prefix to names tries to indicate
 // that these functions are not intended for direct use
 
-// Note for creation of renderable types; types must have a field that is a function called 'render'
-// It is advised to hook into the GameObject class or at least the Transform2D class
-// If you don't hook into the GameObject structure, you need to figure out your own way of updating your renderable
-// (if you hook into the GameObject structure, simply supply the renderable the gameobject.sprite 
-// - and update the gameobject.transform to adjust renderable )
-//
-
-
 ///
 const CANVASDEFAULTS = {
     fontSize: 16,
@@ -31,3 +23,4 @@ function _clearCanvas() {
     ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height)
     ctx.restore()
 }
+

@@ -41,3 +41,5 @@ function makeDragElement(elmnt) {
         document.onmousemove = null;
     }
 }
+// The biolerplate code from here was too good to pass by:
+// https://www.w3schools.com/howto/howto_js_draggable.asp
