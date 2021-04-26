@@ -14,17 +14,17 @@ const FastMath = {
     sqrtPrecision: 0.05,
     sqrt: function (x) {
 
-// part of fast square root sequnce of funtions: evaluates nearness of answer to actual square root;
+// part of fast square root sequnce of functions: evaluates nearness of answer to actual square root;
         const __FastMath__sqrt_isGoodEnough = function (n) {
             return Math.abs(n * n - x) / x < FastMath.sqrtPrecision;
         };
 
-// part of fast square root sequence of funtions:
+// part of fast square root sequence of functions:
         const __FastMath__sqrt_improve = function (guess) {
             return (guess + x / guess) / 2;
         };
 
-// part of fast square root sequnce of funtions
+// part of fast square root sequnce of functions
         const __FastMath__sqrt_sqrIter = function (number) {
             return (__FastMath__sqrt_isGoodEnough(number)) ? number
                 : __FastMath__sqrt_sqrIter(__FastMath__sqrt_improve(number))
@@ -33,7 +33,7 @@ const FastMath = {
         return __FastMath__sqrt_sqrIter(x);
     },
     sqrtInt : function(x){
-        return Math.floor(FastMath.sqrt(x))
+        return Math.round(FastMath.sqrt(x))
     }
 }
 

@@ -30,6 +30,8 @@
     <!-- imports are ordered by the principle of minimal dependency (it's the GameLoop library by me)-->
     <script src="core/heart.js"></script>
     <script src="core/renderer2D.js"></script>
+    <script src="core/FMath.js"></script>
+    <script src="core/draggableelement.js"></script>
 
     <script src="dwittish.js"></script>
 
@@ -37,68 +39,104 @@
 </head>
 
 <body>
-    <canvas id="canvas"></canvas>
+<canvas id="canvas"></canvas>
 
-    <div style="position: absolute;left: 60px;bottom: 60px; background-color: rgb(0, 0, 0); opacity: 85%;">
+<div style="position: absolute;left: 60px;top: 60px; width: auto;height: auto; background-color: rgb(0, 0, 0); opacity: 85%;"
+     id="codeTableElement">
 
-        <code>
+    <code>
 
-    <table class="table-sm m-2" id="codeTable" >
-        <tr>
-            <th>function update(t) {  <span class="text-secondary">// click ⚡ for help, 👁 to toggle code view, ✋ to pause drawing</span></th>
-        </tr>
-        <tr>
-            <td>
-                <textarea id="userCode" rows="5" cols="84" style="resize: both;" onchange="interpretUserCode()">
-for(i=2e3,X=d=0,y=460+t*60;i--;y+=C(d+=S(i**8))*3){
-x.fillRect(X+=C(d)+2+T(t/2)/9,y/2,2/(1+t),t<100)
-x.fillRect(t*i*y%2e3,y-T(t/4)*i*t-200,.5,t<4)
-} 
-                </textarea>
-            </td>
-        </tr>
-        <tr>
-            <th>}
-            <span class="ml-3">// Example:</span>
-            <span class="btn text-success" id="example1" onclick="loadExample(0)">{Ex. 1}</span>
-            <span class="btn text-success" id="example2" onclick="loadExample(1)">{Ex. 2}</span>
-            <span class="btn text-success" id="example3" onclick="loadExample(2)">{Ex. 3}</span>
-            <span class="btn text-success" id="example4" onclick="loadExample(3)">{Ex. 4}</span>
-            </th>
-        </tr>
-    </table>
+        <table class="table-sm m-2" id="codeTable">
+            <tr>
+                <th id="codeTableHeader">
+                    function update(t) {
+                    <span class="text-secondary">// ALT + 0 for help</span>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <textarea id="userCode" rows="5" cols="64" style="resize: both;"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <th>}
+                    <span class="text-secondary">// CTRL + ALT + u to execute code as update(t) each frame.</span>
+                </th>
+            </tr>
+        </table>
     </code>
 
-    </div>
+</div>
 
-        
-    <div style="position: absolute;left: 0.3cm;bottom: 2.3cm; opacity: 90%;font-size: xx-large;" onclick="drawing()">✋
-    </div>
+<div style="position: absolute;left: 60px;top: 350px; width: auto; height: auto; background-color: rgb(0, 0, 0); opacity: 85%;display: block"
+     id="declarativeCodeElement">
 
-    <div onclick="toggleElement('hint')"
-        style="position: absolute;left: 0.15cm;bottom: 1.2cm; opacity: 90%;font-size: xx-large;">⚡</div>
+    <code>
 
-    <h1 onclick="toggleElement('codeTable')" style="position: absolute;left: 0cm;bottom: 0cm;"> 👁 </h1>
+        <table class="table-sm m-2" id="declarativeCodeTable">
+            <tr>
+                <th id="declarativeCodeElementHeader">Expression area:
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <textarea id="userDeclarativeCode" rows="4" cols="44px" style="resize: both;">
+time0(); // resets internal ticker
+clr(); // clears the canvas</textarea>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <span class="text-secondary"> // Select & press CTRL + Enter to evaluate. </span>
+                </th>
+            </tr>
+        </table>
+    </code>
+
+</div>
+
+<div id="pauseHand"
+     style="position: absolute;left: 1.75cm;top: 2.3cm; opacity: 90%;font-size: xxx-large; display: none"
+     onclick="drawing()">✋
+</div>
+
+<!--    Old icon area --- will be resurrected ASAP    -->
+<!--    <div style="position: absolute;left: 0.3cm;bottom: 2.3cm; opacity: 90%;font-size: xx-large;" onclick="drawing()">✋-->
+<!--    </div>-->
+
+<!--    <div onclick="toggleElement('hint')"-->
+<!--        style="position: absolute;left: 0.15cm;bottom: 1.2cm; opacity: 90%;font-size: xx-large;">⚡</div>-->
+
+<!--    <h1 onclick="toggleElement('codeTable')" style="position: absolute;left: 0cm;bottom: 0cm;"> 👁 </h1>-->
 
 
-    <div id="errorFrown" style="position: absolute;right: 4cm;bottom: 60px; opacity: 70%;display: none;font-size: 5cm;">
-        😦</div>
+<div id="errorFrown" style="position: absolute;right: 4cm;bottom: 60px; opacity: 70%;display: none;font-size: 5cm;">
+    😦
+</div>
 
-    <div id="badFieldCross"
-        style="position: absolute;right: 8cm;bottom: 60px; opacity: 70%;display: none;font-size: 5cm;">❌</div>
+<div id="badFieldCross"
+     style="position: absolute;right: 8cm;bottom: 60px; opacity: 70%;display: none;font-size: 5cm;">❌
+</div>
 
-
-
-
-    <!-- HELP SECTION -->
-    <div id="hint"
-        style="position: absolute;right: 50px;top: 30px; opacity: 90%; display: none; background-color: rgb(0, 0, 0);">
-        <code>
+<!-- HELP SECTION -->
+<div id="variableHint"
+     style="position: absolute;left: 50px;bottom: 30px; opacity: 90%; display: none; background-color: rgb(0, 0, 0);">
+    <code>
         <table style="width: 650px;" class="m-2">
             <tr>
                 <th>Identifier</th>
                 <th>Function</th>
                 <th>What is?</th>
+            </tr>
+            <tr>
+                <td>clr</td>
+                <td></td>
+                <td>Draws white on canvas: 'clears canvas'</td>
+            </tr>
+            <tr>
+                <td>time0</td>
+                <td></td>
+                <td>Resets ticker 'time' t value to 0.</td>
             </tr>
             <tr>
                 <td>S</td>
@@ -116,24 +154,29 @@ x.fillRect(t*i*y%2e3,y-T(t/4)*i*t-200,.5,t<4)
                 <td>Tangens-function</td>
             </tr>
             <tr>
-                <td>clr</td>
-                <td></td>
-                <td>Draws white on canvas: 'clears canvas'</td>
+                <td>sqrt</td>
+                <td>FastMath.sqrt</td>
+                <td>Square root function, approximate. Fast.</td>
+            </tr>
+            <tr>
+                <td>sqrtI</td>
+                <td>FastMath.sqrtInt</td>
+                <td>Sqrt func, rounds down to closest int.</td>
             </tr>
             <tr>
                 <td>lE</td>
                 <td>Math.log</td>
-                <td>Log af arg, base E (2,7172..)</td>
+                <td>Log function with base E, 2 or 10</td>
             </tr>
             <tr>
                 <td>l2</td>
                 <td>Math.log2</td>
-                <td>Log af arg, base 2</td>
+                <td>Log function with base 2</td>
             </tr>
             <tr>
                 <td>l10</td>
                 <td>Math.log10</td>
-                <td>Log af arg, base 10</td>
+                <td>Log function with base 10</td>
             </tr>
             <tr>
                 <th>Identifier</th>
@@ -141,9 +184,14 @@ x.fillRect(t*i*y%2e3,y-T(t/4)*i*t-200,.5,t<4)
                 <th>Description</th>
             </tr>
             <tr>
+                <td>t</td>
+                <td>update( t )</td>
+                <td>Seconds from ticker start, reset with time0()</td>
+            </tr>
+            <tr>
                 <td>c</td>
                 <td>canvas</td>
-                <td>Current canvas (window size)</td>
+                <td>Current canvas</td>
             </tr>
             <tr>
                 <td>x</td>
@@ -161,35 +209,98 @@ x.fillRect(t*i*y%2e3,y-T(t/4)*i*t-200,.5,t<4)
                 <td>Mouse Y Coordinate</td>
             </tr>
             <tr>
+                <td>pi</td>
+                <td>Math.PI</td>
+                <td>3.1415..</td>
+            </tr>
+            <tr>
                 <td>pi2</td>
-                <td>pi * 2</td>
+                <td>Math.PI * 2</td>
                 <td>6.2831..</td>
             </tr>
 
             <tr>
+                <th colspan="3">** Canvas size is set to window size on page load.</th>
+            </tr>
+            <tr>
+                <td><span></span></td>
+            </tr>
+        </table>
+    </code>
+</div>
+
+<!-- COMMAND HELP SECTION -->
+<div id="commandHelp"
+     style="position: absolute;right: 50px;bottom: 30px; opacity: 90%; display: block; background-color: rgb(0, 0, 0);">
+    <code>
+        <table style="width: 650px;" class="m-2">
+            <tr>
+                <th class="h4">Dwittish</th>
+                <th colspan="2" class="h4">HTML5/Canvas/JS Playground</th>
+            </tr>
+            <tr>
                 <th></th>
-                <th colspan="2">General Hints</th>                
+                <th colspan="2">Short-cuts</th>
             </tr>
             <tr>
-                <td colspan="3">** Code is evaluated when the code textarea loses focus.</td>  
+                <td>ALT + 0</td>
+                <td colspan="2">Show/Hide this help sheet.</td>
             </tr>
             <tr>
-                <td colspan="3">(Click anywhere outside textarea to evaluate new update function)</td>
+                <td>ALT + 9</td>
+                <td colspan="2">Show/Hide builtin fields and functions hints.</td>
             </tr>
             <tr>
-                <td colspan="3">** The update function is run at the browser native framerate (Prob ~60 fps).</td>
+                <td>ALT + 1</td>
+                <td colspan="2">Show/Hide 'function update' field.</td>
+            </tr>
+            <tr>
+                <td>ALT + 2</td>
+                <td colspan="2">Show/Hide 'Expression area'.</td>
+            </tr>
+            <tr>
+                <th></th>
+                <th colspan="2">Commands</th>
+            </tr>
+
+            <tr>
+                <td>CTRL + ALT + u</td>
+                <td colspan="2">Evaluate and implement code in update-field as update(t)-function.</td>
+            </tr>
+            <tr>
+                <td>CTRL + ALT + SHIFT + U</td>
+                <td colspan="2">Like above plus time is reset to 0.</td>
+            </tr>
+            <tr>
+                <td>CTRL + ENTER</td>
+                <td colspan="2">Evaluate and execute any SELECTED code (once).</td>
+            </tr>
+            <tr>
+                <td>CTRL + ALT + p</td>
+                <td colspan="2">Pause/Continue update method execution.</td>
+            </tr>
+            <tr>
+                <th></th>
+                <th colspan="2">General Hints</th>
+            </tr>
+            <tr>
+                <td colspan="3">** The update function is executed each frame.</td>
+            </tr>
+            <tr>
+                <td colspan="3">** Selected snippets of code are evaluated once. All valid JavaScript permitted.</td>
+            </tr>
+            <tr>
+                <td colspan="3">** Code areas can be dragged and sized!</td>
             </tr>
             <tr>
                 <td colspan="2">** Code with bad syntax:</td>
                 <td>😦 will appear.</td>
             </tr>
             <tr>
-                <td colspan="2">** Code w. good syntax, bad refs:</td>
+                <td colspan="2">** Code bad operations:</td>
                 <td>❌ (On odd behavior, reload (F5))</td>
-            </tr>            
-            <tr>
-                <th colspan="2">** CANVAS SIZE DEFAULTS TO WINDOW SIZE</th>
             </tr>
+
             <tr>
                 <td><span></span></td>
             </tr>
@@ -198,16 +309,27 @@ x.fillRect(t*i*y%2e3,y-T(t/4)*i*t-200,.5,t<4)
                 <th><a href="https://www.dwitter.net/" target="_blank">www.dwitter.net</a></th>
             </tr>
             <tr>
-                <th colspan="2">Does this seem like magic?</th>
-                <th><a href="https://www.w3schools.com/html/html5_canvas.asp" target="_blank">HTML5 Canvas Resource</a></th>
+                <th colspan="2">Not at home with canvas?</th>
+                <th><a href="https://www.w3schools.com/html/html5_canvas.asp" target="_blank">HTML5 Canvas Resource</a>
+                </th>
             </tr>
             <tr>
-                <th colspan="2">Made by </th>
+                <th colspan="2">Made by</th>
                 <th><a href="https://github.com/kiancn" target="_blank">Kian C. Nielsen</a></th>
             </tr>
+            <tr>
+                <th colspan="3">
+                    <span class="ml-3">// Example:</span>
+                    <span class="btn text-success" id="example10" onclick="loadExample(0)">{Ex. 1}</span>
+                    <span class="btn text-success" id="example20" onclick="loadExample(1)">{Ex. 2}</span>
+                    <span class="btn text-success" id="example30" onclick="loadExample(2)">{Ex. 3}</span>
+                    <span class="btn text-success" id="example40" onclick="loadExample(3)">{Ex. 4}</span>
+                </th>
+            </tr>
+
         </table>
     </code>
-    </div>
+</div>
 
 </body>
 

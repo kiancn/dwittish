@@ -18,9 +18,9 @@ class Heart {
     }
 
     beginAgain = function(){
-        this._lastTime = Date.now()
-        this.currentBeat = 0
-        this.timeSinceStart = 0
+        HEART._lastTime = Date.now()
+        HEART.currentBeat = 0
+        HEART.timeSinceStart = 0
     }
 
     // method returns elapsed time since last heartbeat
