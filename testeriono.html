@@ -16,11 +16,59 @@
             integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
             crossorigin="anonymous"></script>
 
+    <script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
+
+    <style>
+
+        body{
+            background-color: #111173;
+        }
+
+        th {
+            color: #47c1e0;
+        }
+
+        td {
+            color: beige;
+        }
+
+        .jumplink{
+            color: beige;
+        }
+    </style>
 
 </head>
 <body>
 
-<div style="position: absolute;left: 15%;top: 5%; width: auto; height: auto; background-color: rgb(0, 0, 0); opacity: 85%;display: block; border-radius: 7px"
+<div style="position: absolute;left: 4%;top: 2%; width: 92%; height: auto;
+ background-color: rgb(0, 0, 0); opacity: 85%;display: block; border-radius: 7px; text-align: center; color: #f5f5dc"
+
+     id="dragEa10">
+    <div style="font-size: large">
+        Programmer | Portfolio & Projects Portal | Kian C. Nielsen
+    </div>
+</div>
+
+<div style="position: absolute;left: 4%;top: 32%; width: 271px; height: 296px;
+ background-color: rgb(0, 0, 0); opacity: 85%;display: block; border-radius: 7px; text-align: center; color: beige; padding: 10px"
+
+     id="dragEa11">
+
+    <div class="badge-base LI-profile-badge" data-locale="da_DK" data-size="medium" data-theme="dark" data-type="VERTICAL" data-vanity="kian-c-nielsen" data-version="v1"><a class="badge-base__link LI-simple-link" href="https://dk.linkedin.com/in/kian-c-nielsen?trk=profile-badge"></a></div>
+
+</div>
+
+
+<!--<div style="position: absolute;left: 4%;top: 8%; width: auto; height: auto;-->
+<!-- background-color: rgb(0, 0, 0); opacity: 85%;display: block; border-radius: 7px; text-align: center; color: #E06647; padding: 10px; padding-bottom: 14px"-->
+
+<!--     id="dragEa11">-->
+<!--    <div class="jumplink">-->
+<!--        <a href="https://www.linkedin.com/in/kian-c-nielsen" target="_blank">LinkedIn</a>-->
+<!--    </div>-->
+<!--</div>-->
+
+<div style="position: absolute;left: 15%;top: 10%; width: auto; height: auto; background-color: rgb(0, 0, 0); opacity: 85%;display: block; border-radius: 7px"
      id="dragEa">
 
     <code>
@@ -41,16 +89,13 @@
                 <td><a href="https://kiancn.github.io/dwittish/" target="main_frame">Here</a> | <a
                         href="https://kiancn.github.io/dwittish/" target="_blank">New Tab</a></td>
             </tr>
-            <tr>
-
-            </tr>
-
 
         </table>
     </code>
 
 </div>
-<div style="position: absolute;left: 65%;top: 5%; width: 360px; height: auto; background-color: rgb(0, 0, 0); opacity: 85%;display: block;  border-radius: 7px"
+<div style="position: absolute;left: 65%;top: 10%; width: 360px; height: auto; background-color: rgb(0, 0, 0); opacity: 85%;display: block;  border-radius: 7px"
+
      id="dragEa1">
 
     <code>
@@ -61,7 +106,9 @@
                 </th>
             </tr>
             <tr>
-                <td>I really enjoy cellular automata, so I had try simulating 'elemental' particles in 2D in pure Javascript.</td>
+                <td>I really enjoy cellular automata, so I had try simulating 'elemental' particles in 2D in pure
+                    Javascript.
+                </td>
             </tr>
             <tr>
                 <td>Paint sand, water, earth or smoke.</td>
@@ -78,7 +125,7 @@
 
 
 <div id="selectedContent"
-     style="position: absolute;left: 17%;top: 37%; width: 65%; height: auto; background-color: rgb(0, 0, 0); opacity: 85%;display: block">
+     style="position: absolute;left: 17%;top: 70%; width: 65%; height: auto; background-color: rgb(0, 0, 0); opacity: 85%;display: block">
     b
     <iframe src="https://kiancn.github.io/dwittish/" frameborder="0" style="width: 100%; height: 850px"
             name="main_frame"></iframe>
@@ -88,6 +135,7 @@
     window.addEventListener("load", function () {
         makeDragElement(document.getElementById("dragEa"))
         makeDragElement(document.getElementById("dragEa1"))
+        makeDragElement(document.getElementById("dragEa11"))
     })
 
     function sortTableAlphabetically(tableID, tdIndexToSortBy, startRowFromTop = 1, endRowFromBottom = 0) {
