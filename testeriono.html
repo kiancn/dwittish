@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <script src="core/draggableelement.js"></script>
+
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+            integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
+
+
+</head>
+<body>
+
+<div style="position: absolute;left: 15%;top: 5%; width: auto; height: auto; background-color: rgb(0, 0, 0); opacity: 85%;display: block; border-radius: 7px"
+     id="dragEa">
+
+    <code>
+
+        <table class="table-sm m-2" id="declarativeCodeTable">
+            <tr>
+                <th id="dragEaHeader">Dwittish
+                </th>
+            </tr>
+            <tr>
+                <td>Live coding environment for HTML5 Canvas.</td>
+            </tr>
+            <tr>
+                <td>Hommage to dwitter.net</td>
+            </tr>
+
+            <tr>
+                <td><a href="https://kiancn.github.io/dwittish/" target="main_frame">Here</a> | <a
+                        href="https://kiancn.github.io/dwittish/" target="_blank">New Tab</a></td>
+            </tr>
+            <tr>
+
+            </tr>
+
+
+        </table>
+    </code>
+
+</div>
+<div style="position: absolute;left: 65%;top: 5%; width: 360px; height: auto; background-color: rgb(0, 0, 0); opacity: 85%;display: block;  border-radius: 7px"
+     id="dragEa1">
+
+    <code>
+
+        <table class="table-sm m-2" id="declarativeCodeTable1">
+            <tr>
+                <th id="dragEaHeader1">JS 2D Particle Sandbox
+                </th>
+            </tr>
+            <tr>
+                <td>I really enjoy cellular automata, so I had try simulating 'elemental' particles in 2D in pure Javascript.</td>
+            </tr>
+            <tr>
+                <td>Paint sand, water, earth or smoke.</td>
+            </tr>
+            <tr>
+                <td><a href="https://kiancn.github.io/JS-Particle-Sandbox/" target="main_frame">Here</a> | <a
+                        href="https://kiancn.github.io/JS-Particle-Sandbox/" target="_blank">New Tab</a></td>
+            </tr>
+
+        </table>
+    </code>
+
+</div>
+
+
+<div id="selectedContent"
+     style="position: absolute;left: 17%;top: 37%; width: 65%; height: auto; background-color: rgb(0, 0, 0); opacity: 85%;display: block">
+    b
+    <iframe src="https://kiancn.github.io/JS-Particle-Sandbox/" frameborder="0" style="width: 100%; height: 850px"
+            name="main_frame"></iframe>
+</div>
+
+<script>
+    window.addEventListener("load", function () {
+        makeDragElement(document.getElementById("dragEa"))
+        makeDragElement(document.getElementById("dragEa1"))
+    })
+
+    function sortTableAlphabetically(tableID, tdIndexToSortBy, startRowFromTop = 1, endRowFromBottom = 0) {
+        // table is the DOM table object
+        // rows are the row objects of the that table
+        // switching is a boolean indicating if sort is supposed to go on
+        // i counts the objects in the rows
+        // a & b stores the temporary relevant 2 values of the <td> that are being compared
+        // shouldSwitch set each iteration, signifies if x-row and y-row should switch
+        let table, rows, switching, i, a, b, shouldSwitch;
+
+        table = document.getElementById(tableID); // get table
+
+        switching = true;
+
+        while (switching) {
+            switching = false; // switched back if round results in switch, remains false if no switch during round
+
+            rows = table.rows; // row objects
+
+            for (i = startRowFromTop; i < (rows.length - (1 + endRowFromBottom)); i++) {
+
+                shouldSwitch = false
+                // getting content of td to compare
+                a = rows[i].getElementsByTagName("TD")[tdIndexToSortBy].innerHTML.toLowerCase();
+                b = rows[i + 1].getElementsByTagName("TD")[tdIndexToSortBy].innerHTML.toLowerCase();
+
+                if (a > b) { // conparing string content of
+                    shouldSwitch = true;
+                    break;
+                }
+            }
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]); // move b-row before a row
+                switching = true // continue to switch if this happened
+            }
+        }
+    }
+</script>
+</body>
+</html>

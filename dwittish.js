@@ -100,9 +100,9 @@ document.onkeydown = function (e) {
         if (e.altKey && e.key === "9") {
             toggleElement('variableHint')
         }
-        if (e.altKey && e.key === "1") {
-            toggleElement('codeTableElement')
-        }
+            if (e.altKey && e.key === "1") {
+                toggleElement('codeTableElement')
+            }
         if (e.altKey && e.key === "2") {
             toggleElement('declarativeCodeElement')
         }
@@ -172,10 +172,10 @@ function u(t) {
             }
         } else {
 
-            // for (i = 2e3, X = d = 0, y = 460 + t * 60; i--; y += C(d += S(i ** 8)) * 3) {
-            //     x.fillRect(X += C(d) + 2 + T(t / 2) / 9, y / 2, 2 / (1 + t), t < 100)
-            //     x.fillRect(t * i * y % 2e3, y - T(t / 4) * i * t - 200, .5, t < 4)
-            // }
+            for (i = 2e3, X = d = 0, y = 460 + t * 60; i--; y += C(d += S(i ** 8)) * 3) {
+                x.fillRect(X += C(d) + 2 + T(t / 2) / 9, y / 2, 2 / (1 + t), t < 100)
+                x.fillRect(t * i * y % 2e3, y - T(t / 4) * i * t - 200, .5, t < 4)
+            }
         }
     }
 }
